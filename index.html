@@ -1525,32 +1525,82 @@
     }
 
     .ai-layout {
+      display: block;
+    }
+
+    .ai-command-center {
+      position: relative;
       display: grid;
-      grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr);
-      gap: 1rem;
-      align-items: start;
+      grid-template-columns: minmax(22rem, .92fr) minmax(0, 1.08fr);
+      grid-template-areas:
+        "system workflow"
+        "system uses"
+        "capabilities capabilities";
+      gap: 1rem 1.1rem;
+      padding: clamp(1rem, 3vw, 1.8rem);
+      border-radius: 34px;
+      overflow: hidden;
     }
 
-    .ai-panel {
-      padding: clamp(1.1rem, 3vw, 1.8rem);
-      border-radius: 30px;
+    .ai-command-center::before {
+      content: "";
+      position: absolute;
+      left: 39%;
+      top: 4rem;
+      bottom: 8.4rem;
+      width: 1px;
+      background: linear-gradient(180deg, transparent, rgba(57, 214, 200, .3), rgba(255, 255, 255, .18), transparent);
+      pointer-events: none;
     }
 
-    .ai-panel h3 {
+    .ai-command-center::after {
+      content: "";
+      position: absolute;
+      inset: auto 1.8rem 7.3rem;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .18), rgba(57, 214, 200, .24), transparent);
+      pointer-events: none;
+    }
+
+    .ai-command-center h3 {
       margin: 0 0 .8rem;
       font-size: 1.45rem;
     }
 
     .ai-system-panel {
+      grid-area: system;
       display: grid;
       gap: 1rem;
+      align-content: center;
+      min-height: 32rem;
+      padding: .25rem;
+    }
+
+    .ai-workflow-panel {
+      grid-area: workflow;
+      display: grid;
+      align-content: start;
+    }
+
+    .ai-use-panel {
+      grid-area: uses;
+      align-self: start;
+    }
+
+    .ai-capability-panel {
+      grid-area: capabilities;
+      padding-top: .35rem;
     }
 
     .tool-rings {
       position: relative;
-      min-height: 22rem;
+      min-height: 23rem;
       display: grid;
       place-items: center;
+      border-radius: 30px;
+      background:
+        radial-gradient(circle at 50% 48%, rgba(57, 214, 200, .14), transparent 34%),
+        linear-gradient(135deg, rgba(255, 255, 255, .055), transparent);
     }
 
     .ring {
@@ -1628,7 +1678,7 @@
     .ai-workflow {
       display: grid;
       gap: .75rem;
-      margin-bottom: .9rem;
+      margin-bottom: 0;
     }
 
     .ai-stage {
@@ -1692,7 +1742,7 @@
       display: flex;
       flex-wrap: wrap;
       gap: .45rem;
-      margin: .3rem 0 1rem;
+      margin: .3rem 0 0;
     }
 
     .ai-use-chip {
@@ -1715,7 +1765,7 @@
 
     .capability-grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: .8rem;
     }
 
@@ -2134,9 +2184,30 @@
 
       .hero-grid,
       .overview-card,
-      .ai-layout,
       .impact-board {
         grid-template-columns: 1fr;
+      }
+
+      .ai-command-center {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+          "system"
+          "workflow"
+          "uses"
+          "capabilities";
+      }
+
+      .ai-command-center::before,
+      .ai-command-center::after {
+        display: none;
+      }
+
+      .ai-system-panel {
+        min-height: auto;
+      }
+
+      .capability-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
       .hero {
@@ -2464,25 +2535,31 @@
           <p data-i18n="aiLead"></p>
         </div>
         <div class="ai-layout">
-          <div class="ai-panel liquid ai-system-panel">
-            <div class="tool-rings" aria-label="AI tools">
-              <div class="ring one"></div>
-              <div class="ring two"></div>
-              <div class="ring three"></div>
-              <span class="tool-chip">Claude Opus</span>
-              <span class="tool-chip">ChatGPT</span>
-              <span class="tool-chip">Amazon Q</span>
-              <span class="tool-chip">Kiro</span>
-              <span class="tool-chip">Coding Agents</span>
-              <div class="tool-core">AI Operating System</div>
+          <div class="ai-command-center liquid">
+            <div class="ai-system-panel">
+              <div class="tool-rings" aria-label="AI tools">
+                <div class="ring one"></div>
+                <div class="ring two"></div>
+                <div class="ring three"></div>
+                <span class="tool-chip">Claude Opus</span>
+                <span class="tool-chip">ChatGPT</span>
+                <span class="tool-chip">Amazon Q</span>
+                <span class="tool-chip">Kiro</span>
+                <span class="tool-chip">Coding Agents</span>
+                <div class="tool-core">AI Operating System</div>
+              </div>
+              <div class="ai-throughput" id="aiThroughput" aria-hidden="true"></div>
             </div>
-            <div class="ai-throughput" id="aiThroughput" aria-hidden="true"></div>
-          </div>
-          <div class="ai-panel liquid">
-            <h3 data-i18n="aiUseTitle"></h3>
-            <div class="ai-workflow" id="aiWorkflow"></div>
-            <div class="ai-use-cloud" id="aiUseList"></div>
-            <div class="capability-grid" id="capabilityGrid"></div>
+            <div class="ai-workflow-panel">
+              <h3 data-i18n="aiUseTitle"></h3>
+              <div class="ai-workflow" id="aiWorkflow"></div>
+            </div>
+            <div class="ai-use-panel">
+              <div class="ai-use-cloud" id="aiUseList"></div>
+            </div>
+            <div class="ai-capability-panel">
+              <div class="capability-grid" id="capabilityGrid"></div>
+            </div>
           </div>
         </div>
       </section>
