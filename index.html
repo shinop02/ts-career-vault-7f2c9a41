@@ -1322,47 +1322,144 @@
     }
 
     .timeline {
-      overflow: hidden;
+      overflow: visible;
       border-radius: 34px;
-      padding: 1rem;
+      padding: clamp(1rem, 3vw, 1.5rem);
     }
 
     .timeline-track {
+      position: relative;
       display: grid;
-      grid-auto-flow: column;
-      grid-auto-columns: minmax(20rem, 31rem);
-      gap: 1rem;
-      overflow-x: auto;
-      padding: .4rem .4rem 1.2rem;
-      scroll-snap-type: x mandatory;
-      scrollbar-color: var(--line) transparent;
+      gap: .85rem;
+      overflow: visible;
+      padding: .15rem;
+    }
+
+    .timeline-track::before {
+      content: "";
+      position: absolute;
+      left: 4.55rem;
+      top: 1.4rem;
+      bottom: 1.4rem;
+      width: 1px;
+      background: linear-gradient(180deg, rgba(57, 214, 200, .65), rgba(108, 168, 255, .32), rgba(231, 183, 94, .46));
+      opacity: .72;
+      pointer-events: none;
     }
 
     .role-card {
-      min-height: 31rem;
-      scroll-snap-align: start;
-      padding: 1.1rem;
-      border-radius: 26px;
+      position: relative;
+      min-height: 0;
+      display: grid;
+      grid-template-columns: 7.2rem minmax(0, 1fr);
+      gap: 1rem;
+      align-items: stretch;
+      padding: 1rem;
+      border-radius: 30px;
       border: 1px solid var(--line);
       background: rgba(255, 255, 255, .06);
       transform: translateZ(0);
+      transition: transform .24s ease, border-color .24s ease, background .24s ease, box-shadow .24s ease;
     }
 
-    .role-card::after {
-      content: "";
-      display: block;
-      width: 100%;
-      height: .42rem;
-      margin-top: 1rem;
-      border-radius: 999px;
-      background:
-        linear-gradient(90deg, var(--teal), var(--blue), var(--gold)),
-        rgba(255, 255, 255, .06);
-      opacity: .72;
+    .role-card:hover {
+      transform: translateY(-3px);
+      border-color: color-mix(in srgb, var(--teal), var(--line) 45%);
+      background: rgba(255, 255, 255, .078);
     }
 
     .role-card.current {
       box-shadow: 0 0 0 1px rgba(57, 214, 200, .26), 0 22px 60px rgba(57, 214, 200, .1);
+    }
+
+    .role-marker {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      align-content: start;
+      justify-items: center;
+      gap: .7rem;
+      min-height: 100%;
+      padding-top: .15rem;
+    }
+
+    .role-index {
+      width: 4.3rem;
+      height: 4.3rem;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: #04101e;
+      font-size: .96rem;
+      font-weight: 950;
+      background:
+        radial-gradient(circle at 34% 26%, rgba(255, 255, 255, .95), transparent 28%),
+        linear-gradient(135deg, var(--teal), var(--blue));
+      box-shadow: 0 18px 46px rgba(57, 214, 200, .18);
+    }
+
+    .role-card:nth-child(2) .role-index,
+    .role-card:nth-child(5) .role-index {
+      background: linear-gradient(135deg, var(--blue), var(--gold));
+    }
+
+    .role-card:nth-child(3) .role-index,
+    .role-card:nth-child(6) .role-index {
+      background: linear-gradient(135deg, var(--gold), var(--rose));
+    }
+
+    .role-period {
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      color: var(--subtle);
+      font-size: .76rem;
+      letter-spacing: 0;
+      line-height: 1.2;
+      max-height: 13rem;
+    }
+
+    .role-content {
+      display: grid;
+      grid-template-columns: minmax(0, .72fr) minmax(17rem, .28fr);
+      gap: 1rem;
+      align-items: start;
+      min-width: 0;
+      padding: .25rem .2rem .15rem 0;
+    }
+
+    .role-main {
+      min-width: 0;
+    }
+
+    .role-side {
+      min-height: 100%;
+      display: grid;
+      align-content: space-between;
+      gap: .75rem;
+      padding: .85rem;
+      border-radius: 24px;
+      border: 1px solid var(--line);
+      background:
+        radial-gradient(circle at 20% 16%, rgba(57, 214, 200, .14), transparent 34%),
+        rgba(255, 255, 255, .045);
+    }
+
+    .role-side::before {
+      content: "";
+      display: block;
+      width: 100%;
+      height: 4.4rem;
+      border-radius: 18px;
+      background:
+        linear-gradient(90deg, transparent 0 12%, rgba(108, 168, 255, .7) 12% 20%, transparent 20% 28%, rgba(57, 214, 200, .72) 28% 36%, transparent 36% 44%, rgba(108, 168, 255, .72) 44% 52%, transparent 52% 60%, rgba(57, 214, 200, .72) 60% 68%, transparent 68% 76%, rgba(231, 183, 94, .78) 76% 84%, transparent 84%),
+        radial-gradient(circle at 20% 30%, rgba(255, 255, 255, .24), transparent 40%);
+      opacity: .78;
+    }
+
+    .role-side span {
+      color: var(--muted);
+      font-size: .84rem;
+      line-height: 1.35;
     }
 
     .role-kicker {
@@ -1374,14 +1471,14 @@
 
     .role-card h3 {
       margin: .45rem 0 .2rem;
-      font-size: 1.4rem;
+      font-size: clamp(1.55rem, 3vw, 2.65rem);
       line-height: 1.08;
     }
 
     .role-title {
       color: var(--muted);
       line-height: 1.4;
-      margin: 0 0 .9rem;
+      margin: 0 0 .95rem;
     }
 
     .role-card ul,
@@ -1401,6 +1498,10 @@
       padding-left: 1rem;
       color: var(--muted);
       line-height: 1.42;
+    }
+
+    .role-card li:nth-child(n+5) {
+      display: none;
     }
 
     .role-card li::before,
@@ -2337,18 +2438,47 @@
       }
 
       .timeline {
-        padding: .6rem;
+        padding: .65rem;
       }
 
-      .timeline-track {
-        display: grid;
-        grid-auto-flow: row;
-        grid-auto-columns: auto;
-        overflow: visible;
+      .timeline-track::before {
+        left: 2.35rem;
+        top: 1.2rem;
+        bottom: 1.2rem;
       }
 
       .role-card {
         min-height: auto;
+        grid-template-columns: 4.7rem minmax(0, 1fr);
+        gap: .65rem;
+        padding: .8rem;
+        border-radius: 24px;
+      }
+
+      .role-index {
+        width: 3.2rem;
+        height: 3.2rem;
+        font-size: .82rem;
+      }
+
+      .role-period {
+        display: none;
+      }
+
+      .role-content {
+        grid-template-columns: 1fr;
+        gap: .72rem;
+        padding-right: 0;
+      }
+
+      .role-side {
+        min-height: auto;
+        padding: .7rem;
+        border-radius: 18px;
+      }
+
+      .role-side::before {
+        height: 2.8rem;
       }
 
       .tool-rings {
@@ -2928,7 +3058,9 @@
       }
 
       function roleMarkup([company, title, dates, points], current, index) {
-        return `<button class="role-card detail-trigger${current ? " current" : ""}" type="button" data-detail="role" data-index="${index}"><p class="role-kicker">${escapeHtml(dates)}</p><h3>${escapeHtml(company)}</h3><p class="role-title">${escapeHtml(title)}</p><ul>${points.slice(0, 5).map((point) => `<li>${escapeHtml(point)}</li>`).join("")}</ul><span class="card-action">${escapeHtml(data[lang].openLabel)} →</span></button>`;
+        const label = String(index + 1).padStart(2, "0");
+        const summary = points.slice(0, 2).join(" / ");
+        return `<button class="role-card detail-trigger${current ? " current" : ""}" type="button" data-detail="role" data-index="${index}"><span class="role-marker" aria-hidden="true"><span class="role-index">${label}</span><span class="role-period">${escapeHtml(dates)}</span></span><span class="role-content"><span class="role-main"><p class="role-kicker">${escapeHtml(dates)}</p><h3>${escapeHtml(company)}</h3><p class="role-title">${escapeHtml(title)}</p><ul>${points.slice(0, 5).map((point) => `<li>${escapeHtml(point)}</li>`).join("")}</ul></span><span class="role-side" aria-hidden="true"><span>${escapeHtml(summary)}</span><span class="card-action">${escapeHtml(data[lang].openLabel)} →</span></span></span></button>`;
       }
 
       function projectMarkup([title, role, challenge, execution, impact], index) {
@@ -3228,7 +3360,7 @@
         let startY = 0;
         let startTime = 0;
         let suppressClickUntil = 0;
-        const ignoreSelector = ".nav, .hero-proof, .timeline-track, .detail-dialog, input, a";
+        const ignoreSelector = ".nav, .hero-proof, .detail-dialog, input, a";
         main.addEventListener("click", (event) => {
           if (performance.now() < suppressClickUntil) {
             event.preventDefault();
