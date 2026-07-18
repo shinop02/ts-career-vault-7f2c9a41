@@ -582,30 +582,35 @@
     .section {
       width: min(72rem, 100%);
       margin: 0 auto;
-      padding: 7rem max(1.05rem, env(safe-area-inset-left)) 2.5rem max(1.05rem, env(safe-area-inset-right));
+      padding: 5.4rem max(1.05rem, env(safe-area-inset-left)) 2.5rem max(1.05rem, env(safe-area-inset-right));
       scroll-margin-top: 0;
     }
 
     .hero {
-      min-height: calc(100svh - var(--safe-top));
+      min-height: auto;
       display: grid;
-      align-content: center;
-      padding-top: calc(5rem + var(--safe-top));
+      align-content: start;
+      padding-top: calc(2.8rem + var(--safe-top));
+      padding-bottom: 1.4rem;
       perspective: 1200px;
     }
 
     .hero-grid {
       display: grid;
-      grid-template-columns: minmax(0, 1fr);
-      gap: clamp(1rem, 3vw, 2.5rem);
+      grid-template-columns: minmax(0, 1fr) minmax(25rem, 1fr);
+      gap: clamp(1rem, 3vw, 2rem);
       align-items: end;
-      max-width: 58rem;
+      max-width: 72rem;
+    }
+
+    .hero-copy {
+      padding-bottom: .35rem;
     }
 
     .hero-title {
       margin: 0;
-      font-size: clamp(3.6rem, 12vw, 9.2rem);
-      line-height: .86;
+      font-size: clamp(3.05rem, 8.1vw, 6.55rem);
+      line-height: .88;
       letter-spacing: 0;
       transform: rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
       transform-style: preserve-3d;
@@ -616,9 +621,9 @@
     }
 
     .hero-subline {
-      margin: 1.2rem 0 0;
+      margin: 1rem 0 0;
       color: var(--muted);
-      font-size: clamp(1.05rem, 2vw, 1.45rem);
+      font-size: clamp(1rem, 1.65vw, 1.28rem);
       line-height: 1.45;
       max-width: 47rem;
     }
@@ -627,7 +632,7 @@
       display: flex;
       flex-wrap: wrap;
       gap: .55rem;
-      margin: 1.4rem 0 0;
+      margin: 1.15rem 0 0;
       padding: 0;
       list-style: none;
     }
@@ -641,39 +646,92 @@
     }
 
     .hero-proof {
-      display: flex;
-      flex-wrap: wrap;
-      gap: .55rem;
-      margin-top: 1.15rem;
-      max-width: 48rem;
+      display: grid;
+      grid-template-columns: 1.12fr .88fr;
+      grid-template-rows: repeat(2, minmax(8.4rem, auto));
+      gap: .85rem;
+      align-self: stretch;
     }
 
-    .hero-proof span {
-      display: inline-flex;
-      align-items: baseline;
-      gap: .45rem;
-      min-height: 2.55rem;
-      padding: .55rem .78rem;
-      border-radius: 999px;
+    .hero-proof-card {
+      appearance: none;
+      position: relative;
+      overflow: hidden;
+      min-height: 8.4rem;
+      display: grid;
+      align-content: end;
+      gap: .62rem;
+      width: 100%;
+      padding: 1rem;
+      border-radius: 30px;
       border: 1px solid var(--line);
-      color: var(--subtle);
-      background: rgba(255, 255, 255, .055);
-      box-shadow: inset 0 1px rgba(255, 255, 255, .12);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-    }
-
-    .hero-proof strong {
       color: var(--ink);
-      font-size: .98rem;
-      line-height: 1;
-      white-space: nowrap;
+      text-align: left;
+      font: inherit;
+      cursor: pointer;
+      background:
+        radial-gradient(circle at 82% 18%, rgba(255, 255, 255, .24), transparent 22%),
+        linear-gradient(135deg, rgba(255, 255, 255, .17), rgba(255, 255, 255, .052)),
+        var(--glass);
+      box-shadow: 0 26px 70px var(--shadow), inset 0 1px rgba(255, 255, 255, .24);
+      backdrop-filter: blur(20px) saturate(140%);
+      -webkit-backdrop-filter: blur(20px) saturate(140%);
+      transition: transform .24s ease, border-color .24s ease, background .24s ease;
     }
 
-    .hero-proof em {
+    .hero-proof-card:hover {
+      transform: translateY(-3px);
+      border-color: color-mix(in srgb, var(--teal), var(--line) 35%);
+    }
+
+    .hero-proof-card.primary {
+      grid-row: span 2;
+      min-height: 17.8rem;
+      padding: 1.15rem;
+      background:
+        radial-gradient(circle at 82% 18%, rgba(231, 183, 94, .24), transparent 25%),
+        radial-gradient(circle at 16% 22%, rgba(57, 214, 200, .3), transparent 28%),
+        linear-gradient(135deg, rgba(255, 255, 255, .18), rgba(255, 255, 255, .055)),
+        var(--glass);
+    }
+
+    .hero-proof-card::before {
+      content: "";
+      position: absolute;
+      right: .95rem;
+      top: .95rem;
+      width: 5.4rem;
+      height: 3.2rem;
+      border-radius: 1rem;
+      background:
+        linear-gradient(90deg, transparent 0 12%, rgba(108, 168, 255, .72) 12% 20%, transparent 20% 28%, rgba(57, 214, 200, .72) 28% 36%, transparent 36% 44%, rgba(108, 168, 255, .72) 44% 52%, transparent 52% 60%, rgba(57, 214, 200, .72) 60% 68%, transparent 68% 76%, rgba(231, 183, 94, .78) 76% 84%, transparent 84%),
+        linear-gradient(180deg, rgba(255, 255, 255, .16), transparent);
+      mask-image: linear-gradient(to top, #000 0 100%);
+      opacity: .78;
+    }
+
+    .hero-proof-card strong {
+      position: relative;
+      z-index: 1;
+      display: block;
+      font-size: clamp(2.35rem, 6.2vw, 5.15rem);
+      line-height: .88;
+      letter-spacing: 0;
+      white-space: normal;
+    }
+
+    .hero-proof-card:not(.primary) strong {
+      font-size: clamp(2rem, 4.2vw, 3.25rem);
+    }
+
+    .hero-proof-card em {
+      position: relative;
+      z-index: 1;
+      max-width: 18rem;
+      color: var(--muted);
       font-style: normal;
-      font-size: .78rem;
-      line-height: 1.2;
+      font-size: clamp(.9rem, 1.7vw, 1.08rem);
+      line-height: 1.32;
     }
 
     .hero-lens {
@@ -801,9 +859,14 @@
       padding: clamp(1.2rem, 4vw, 2.2rem);
       border-radius: 32px;
       display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(17rem, .58fr);
+      grid-template-columns: minmax(0, .95fr) minmax(17rem, .72fr);
       gap: 1.5rem;
       align-items: start;
+    }
+
+    .overview-copy {
+      display: grid;
+      gap: 1.1rem;
     }
 
     .overview-card p {
@@ -811,6 +874,79 @@
       font-size: clamp(1.08rem, 2vw, 1.5rem);
       line-height: 1.65;
     }
+
+    .profile-diagram {
+      position: relative;
+      min-height: 12.4rem;
+      border-radius: 28px;
+      border: 1px solid var(--line);
+      background:
+        radial-gradient(circle at 50% 50%, rgba(57, 214, 200, .16), transparent 34%),
+        linear-gradient(135deg, rgba(255, 255, 255, .08), rgba(255, 255, 255, .035));
+      overflow: hidden;
+    }
+
+    .profile-diagram::before,
+    .profile-diagram::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, .16);
+      transform: translate(-50%, -50%);
+    }
+
+    .profile-diagram::before {
+      width: 10.2rem;
+      height: 10.2rem;
+    }
+
+    .profile-diagram::after {
+      width: 6.6rem;
+      height: 6.6rem;
+      border-color: rgba(57, 214, 200, .28);
+    }
+
+    .profile-core {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      z-index: 2;
+      width: 5.1rem;
+      height: 5.1rem;
+      display: grid;
+      place-items: center;
+      padding: .6rem;
+      border-radius: 50%;
+      color: #04101e;
+      text-align: center;
+      font-size: .72rem;
+      font-weight: 900;
+      line-height: 1.1;
+      background: radial-gradient(circle at 36% 28%, #fff, #9de9e2 34%, #6ca8ff 100%);
+      box-shadow: 0 18px 50px rgba(57, 214, 200, .22);
+      transform: translate(-50%, -50%);
+    }
+
+    .profile-node {
+      position: absolute;
+      min-width: 7.2rem;
+      padding: .48rem .58rem;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: color-mix(in srgb, var(--glass-strong), transparent 12%);
+      box-shadow: 0 14px 34px var(--shadow);
+      color: var(--ink);
+      font-size: .75rem;
+      font-weight: 750;
+      text-align: center;
+    }
+
+    .profile-node:nth-child(2) { left: 5%; top: 12%; }
+    .profile-node:nth-child(3) { right: 5%; top: 16%; }
+    .profile-node:nth-child(4) { left: 4%; bottom: 15%; }
+    .profile-node:nth-child(5) { right: 4%; bottom: 14%; }
 
     .overview-points {
       display: grid;
@@ -855,13 +991,281 @@
       line-height: 1.45;
     }
 
-    .metric-grid {
+    .impact-board {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .impact-story {
+      appearance: none;
+      width: 100%;
+      min-height: 21rem;
+      display: grid;
+      grid-template-rows: minmax(8rem, 1fr) auto;
+      gap: 1rem;
+      padding: 1rem;
+      border-radius: 32px;
+      color: inherit;
+      text-align: left;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .impact-story.compact {
+      min-height: 17.2rem;
+    }
+
+    .impact-copy {
+      display: grid;
+      gap: .65rem;
+    }
+
+    .impact-copy h3 {
+      margin: 0;
+      font-size: clamp(1.35rem, 2.7vw, 2.4rem);
+      line-height: .98;
+      letter-spacing: 0;
+    }
+
+    .impact-copy p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .impact-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .48rem;
+    }
+
+    .impact-stats span {
+      padding: .48rem .62rem;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      color: var(--ink);
+      background: rgba(255, 255, 255, .06);
+      font-size: .8rem;
+      font-weight: 780;
+    }
+
+    .impact-visual {
+      position: relative;
+      min-height: 9rem;
+      border-radius: 26px;
+      border: 1px solid var(--line);
+      background:
+        radial-gradient(circle at 18% 20%, rgba(57, 214, 200, .2), transparent 30%),
+        radial-gradient(circle at 82% 75%, rgba(231, 183, 94, .16), transparent 32%),
+        rgba(255, 255, 255, .045);
+      overflow: hidden;
+    }
+
+    .impact-visual.growth {
+      display: grid;
+      place-items: center;
+    }
+
+    .impact-visual.growth::before,
+    .impact-visual.growth::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, .16);
+    }
+
+    .impact-visual.growth::before {
+      width: 10.5rem;
+      height: 10.5rem;
+    }
+
+    .impact-visual.growth::after {
+      width: 6.8rem;
+      height: 6.8rem;
+      border-color: rgba(57, 214, 200, .28);
+    }
+
+    .growth-core {
+      position: relative;
+      z-index: 2;
+      width: 5.8rem;
+      height: 5.8rem;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: #04101e;
+      text-align: center;
+      font-weight: 900;
+      background: radial-gradient(circle at 36% 28%, #fff, #9de9e2 34%, #6ca8ff 100%);
+      box-shadow: 0 18px 54px rgba(57, 214, 200, .22);
+    }
+
+    .growth-chip {
+      position: absolute;
+      z-index: 3;
+      padding: .42rem .56rem;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: var(--glass-strong);
+      font-size: .76rem;
+      font-weight: 780;
+    }
+
+    .growth-chip.one { left: 8%; top: 14%; }
+    .growth-chip.two { right: 8%; top: 18%; }
+    .growth-chip.three { left: 50%; bottom: 9%; transform: translateX(-50%); }
+
+    .selection-visual,
+    .launch-visual {
+      display: grid;
+      align-content: end;
+      gap: .56rem;
+      padding: 1rem;
+    }
+
+    .selection-bars {
+      height: 6rem;
+      display: flex;
+      align-items: flex-end;
+      gap: .52rem;
+    }
+
+    .selection-bars i {
+      flex: 1;
+      border-radius: 999px 999px .5rem .5rem;
+      background: linear-gradient(180deg, rgba(255, 255, 255, .72), rgba(57, 214, 200, .46));
+    }
+
+    .selection-bars i:nth-child(1) { height: 42%; }
+    .selection-bars i:nth-child(2) { height: 58%; }
+    .selection-bars i:nth-child(3) { height: 76%; }
+    .selection-bars i:nth-child(4) { height: 88%; background: linear-gradient(180deg, rgba(255, 255, 255, .8), rgba(231, 183, 94, .48)); }
+
+    .selection-caption,
+    .launch-caption {
+      display: flex;
+      justify-content: space-between;
+      gap: .7rem;
+      color: var(--muted);
+      font-size: .78rem;
+      line-height: 1.25;
+    }
+
+    .people-tree-mini {
+      position: relative;
+      min-height: 10rem;
+      padding: .85rem;
+    }
+
+    .people-tree-mini::before,
+    .people-tree-mini::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      width: 1px;
+      background: var(--line);
+      transform: translateX(-50%);
+    }
+
+    .people-tree-mini::before {
+      top: 3.15rem;
+      height: 2rem;
+    }
+
+    .people-tree-mini::after {
+      top: 5.1rem;
+      width: 68%;
+      height: 1px;
+      left: 16%;
+      transform: none;
+    }
+
+    .tree-boss,
+    .tree-manager,
+    .tree-frontline {
+      position: absolute;
+      z-index: 2;
+      display: grid;
+      place-items: center;
+      border-radius: 22px;
+      border: 1px solid var(--line);
+      background: var(--glass-strong);
+      box-shadow: 0 16px 38px var(--shadow);
+      color: var(--ink);
+      text-align: center;
+      font-weight: 850;
+      line-height: 1.1;
+    }
+
+    .tree-boss {
+      left: 50%;
+      top: .75rem;
+      width: 7.2rem;
+      height: 2.8rem;
+      transform: translateX(-50%);
+    }
+
+    .tree-manager {
+      top: 5.55rem;
+      width: 5.6rem;
+      height: 2.35rem;
+      font-size: .82rem;
+    }
+
+    .tree-manager.one { left: 4%; }
+    .tree-manager.two { left: 50%; transform: translateX(-50%); }
+    .tree-manager.three { right: 4%; }
+
+    .tree-frontline {
+      left: 50%;
+      bottom: .6rem;
+      width: 10.8rem;
+      min-height: 2.35rem;
+      transform: translateX(-50%);
+      color: #04101e;
+      background: linear-gradient(135deg, var(--teal), var(--blue));
+    }
+
+    .launch-flow {
+      display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: .45rem;
+      align-items: center;
+    }
+
+    .launch-flow span {
+      min-height: 4.9rem;
+      display: grid;
+      place-items: center;
+      padding: .45rem;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, .06);
+      color: var(--muted);
+      text-align: center;
+      font-size: .74rem;
+      line-height: 1.18;
+    }
+
+    .metric-grid {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
       margin-top: 1rem;
     }
 
     .metric-grid .metric {
-      min-height: 8.2rem;
+      min-height: 6.4rem;
+      border-radius: 22px;
+      padding: .82rem;
+    }
+
+    .metric-grid .metric strong {
+      font-size: clamp(1.45rem, 3vw, 2.25rem);
+    }
+
+    .metric-grid .metric span {
+      font-size: .75rem;
     }
 
     .operating-map {
@@ -1122,7 +1526,7 @@
 
     .ai-layout {
       display: grid;
-      grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+      grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr);
       gap: 1rem;
       align-items: start;
     }
@@ -1137,9 +1541,14 @@
       font-size: 1.45rem;
     }
 
+    .ai-system-panel {
+      display: grid;
+      gap: 1rem;
+    }
+
     .tool-rings {
       position: relative;
-      min-height: 25rem;
+      min-height: 22rem;
       display: grid;
       place-items: center;
     }
@@ -1188,6 +1597,121 @@
     .tool-chip:nth-of-type(3) { left: 2%; bottom: 26%; }
     .tool-chip:nth-of-type(4) { right: 4%; bottom: 21%; }
     .tool-chip:nth-of-type(5) { left: 38%; bottom: 4%; }
+
+    .ai-throughput {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: .55rem;
+    }
+
+    .ai-throughput span {
+      min-height: 4.6rem;
+      display: grid;
+      align-content: center;
+      gap: .25rem;
+      padding: .7rem;
+      border-radius: 20px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, .052);
+      color: var(--muted);
+      font-size: .76rem;
+      line-height: 1.25;
+      text-align: center;
+    }
+
+    .ai-throughput b {
+      display: block;
+      color: var(--ink);
+      font-size: .86rem;
+    }
+
+    .ai-workflow {
+      display: grid;
+      gap: .75rem;
+      margin-bottom: .9rem;
+    }
+
+    .ai-stage {
+      appearance: none;
+      width: 100%;
+      min-height: 6.8rem;
+      display: grid;
+      grid-template-columns: 4.8rem minmax(0, 1fr);
+      gap: .85rem;
+      align-items: center;
+      padding: .75rem;
+      border-radius: 24px;
+      border: 1px solid var(--line);
+      background:
+        radial-gradient(circle at 12% 18%, rgba(57, 214, 200, .16), transparent 36%),
+        rgba(255, 255, 255, .05);
+      color: inherit;
+      font: inherit;
+      text-align: left;
+      cursor: pointer;
+      transition: transform .22s ease, border-color .22s ease, background .22s ease;
+    }
+
+    .ai-stage:hover {
+      transform: translateY(-2px);
+      border-color: color-mix(in srgb, var(--teal), var(--line) 45%);
+      background: rgba(255, 255, 255, .074);
+    }
+
+    .ai-stage-orb {
+      width: 4.4rem;
+      height: 4.4rem;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: #04101e;
+      font-weight: 900;
+      background:
+        radial-gradient(circle at 35% 28%, rgba(255, 255, 255, .95), transparent 28%),
+        linear-gradient(135deg, var(--teal), var(--blue));
+      box-shadow: 0 18px 42px rgba(57, 214, 200, .18);
+    }
+
+    .ai-stage:nth-child(2) .ai-stage-orb { background: linear-gradient(135deg, var(--blue), var(--gold)); }
+    .ai-stage:nth-child(3) .ai-stage-orb { background: linear-gradient(135deg, var(--gold), var(--rose)); }
+    .ai-stage:nth-child(4) .ai-stage-orb { background: linear-gradient(135deg, var(--teal), var(--gold)); }
+
+    .ai-stage h4 {
+      margin: 0 0 .25rem;
+      font-size: 1.05rem;
+    }
+
+    .ai-stage p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.42;
+      font-size: .9rem;
+    }
+
+    .ai-use-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .45rem;
+      margin: .3rem 0 1rem;
+    }
+
+    .ai-use-chip {
+      appearance: none;
+      padding: .5rem .62rem;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      background: rgba(255, 255, 255, .052);
+      font: inherit;
+      font-size: .78rem;
+      cursor: pointer;
+    }
+
+    .ai-use-chip:hover {
+      color: var(--ink);
+      border-color: color-mix(in srgb, var(--blue), var(--line) 45%);
+      background: rgba(255, 255, 255, .078);
+    }
 
     .capability-grid {
       display: grid;
@@ -1359,7 +1883,9 @@
     .flow-visual,
     .skill-visual,
     .metric-visual,
-    .role-visual {
+    .role-visual,
+    .people-visual,
+    .ai-pipeline-visual {
       width: min(25rem, 100%);
       padding: 1rem;
     }
@@ -1482,6 +2008,112 @@
       height: 2rem;
     }
 
+    .people-visual {
+      display: grid;
+      gap: .85rem;
+    }
+
+    .people-visual .people-root,
+    .people-visual .people-layer,
+    .people-visual .people-front {
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, .055);
+      box-shadow: inset 0 1px rgba(255, 255, 255, .14);
+    }
+
+    .people-visual .people-root {
+      min-height: 4.6rem;
+      display: grid;
+      place-items: center;
+      border-radius: 24px;
+      color: var(--ink);
+      font-size: 1.15rem;
+      font-weight: 900;
+      text-align: center;
+    }
+
+    .people-visual .people-branches {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: .6rem;
+      padding-top: 1.1rem;
+    }
+
+    .people-visual .people-branches::before {
+      content: "";
+      position: absolute;
+      left: 12%;
+      right: 12%;
+      top: .36rem;
+      height: 1px;
+      background: var(--line);
+    }
+
+    .people-visual .people-layer {
+      min-height: 4.2rem;
+      display: grid;
+      place-items: center;
+      border-radius: 20px;
+      color: var(--muted);
+      text-align: center;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+
+    .people-visual .people-front {
+      min-height: 5rem;
+      display: grid;
+      place-items: center;
+      border-radius: 24px;
+      color: #04101e;
+      text-align: center;
+      font-size: 1.35rem;
+      font-weight: 950;
+      background: linear-gradient(135deg, var(--teal), var(--blue));
+    }
+
+    .ai-pipeline-visual {
+      display: grid;
+      gap: .7rem;
+    }
+
+    .ai-pipeline-step {
+      display: grid;
+      grid-template-columns: 3.3rem minmax(0, 1fr);
+      gap: .8rem;
+      align-items: center;
+      padding: .68rem;
+      border-radius: 20px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, .052);
+    }
+
+    .ai-pipeline-step i {
+      width: 3.3rem;
+      height: 3.3rem;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 34% 28%, rgba(255, 255, 255, .9), transparent 28%),
+        linear-gradient(135deg, var(--teal), var(--blue));
+      box-shadow: 0 18px 42px rgba(57, 214, 200, .18);
+    }
+
+    .ai-pipeline-step:nth-child(2) i { background: linear-gradient(135deg, var(--blue), var(--gold)); }
+    .ai-pipeline-step:nth-child(3) i { background: linear-gradient(135deg, var(--gold), var(--rose)); }
+    .ai-pipeline-step:nth-child(4) i { background: linear-gradient(135deg, var(--teal), var(--gold)); }
+
+    .ai-pipeline-step strong {
+      display: block;
+      margin-bottom: .18rem;
+    }
+
+    .ai-pipeline-step span {
+      color: var(--muted);
+      font-size: .86rem;
+      line-height: 1.35;
+    }
+
     @keyframes sunrise {
       to {
         opacity: 1;
@@ -1502,12 +2134,23 @@
 
       .hero-grid,
       .overview-card,
-      .ai-layout {
+      .ai-layout,
+      .impact-board {
         grid-template-columns: 1fr;
       }
 
       .hero {
         align-content: start;
+      }
+
+      .hero-proof {
+        grid-template-columns: 1fr;
+        grid-template-rows: none;
+      }
+
+      .hero-proof-card.primary {
+        grid-row: auto;
+        min-height: 12.8rem;
       }
 
       .hero-lens {
@@ -1558,8 +2201,8 @@
       }
 
       .hero {
-        min-height: 100svh;
-        padding-top: calc(5.5rem + var(--safe-top));
+        min-height: auto;
+        padding-top: calc(2rem + var(--safe-top));
       }
 
       .positioning-list {
@@ -1571,28 +2214,51 @@
       }
 
       .hero-proof {
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        margin-right: -1.05rem;
-        padding-right: 1.05rem;
-        padding-bottom: .15rem;
-        scrollbar-width: none;
+        margin-top: 1.05rem;
       }
 
-      .hero-proof::-webkit-scrollbar {
-        display: none;
+      .hero-proof-card,
+      .hero-proof-card.primary {
+        min-height: 10.8rem;
+        border-radius: 26px;
       }
 
-      .hero-proof span {
-        flex: 0 0 auto;
+      .hero-proof-card strong,
+      .hero-proof-card:not(.primary) strong {
+        font-size: clamp(2.55rem, 15vw, 4.4rem);
       }
 
       .metric-strip,
       .metric-grid,
       .operating-map,
       .project-grid,
-      .capability-grid {
+      .capability-grid,
+      .ai-throughput,
+      .launch-flow {
         grid-template-columns: 1fr;
+      }
+
+      .impact-story,
+      .impact-story.compact {
+        min-height: auto;
+      }
+
+      .profile-diagram {
+        min-height: 14rem;
+      }
+
+      .profile-node {
+        min-width: 6.4rem;
+        font-size: .7rem;
+      }
+
+      .ai-stage {
+        grid-template-columns: 3.8rem minmax(0, 1fr);
+      }
+
+      .ai-stage-orb {
+        width: 3.6rem;
+        height: 3.6rem;
       }
 
       .metric {
@@ -1734,7 +2400,7 @@
     <main id="main">
       <section class="section hero" id="overview" data-section>
         <div class="hero-grid">
-          <div>
+          <div class="hero-copy">
             <p class="eyebrow" data-i18n="heroEyebrow"></p>
             <h1 class="hero-title" aria-label="Tomohiro Shinozuka">
               <span>Tomohiro</span>
@@ -1742,8 +2408,8 @@
             </h1>
             <p class="hero-subline" data-i18n="heroSubline"></p>
             <ul class="positioning-list" id="positioningList"></ul>
-            <div class="hero-proof" id="heroProof" aria-label="Selected career proof points"></div>
           </div>
+          <div class="hero-proof" id="heroProof" aria-label="Selected career proof points"></div>
         </div>
       </section>
 
@@ -1754,10 +2420,20 @@
           <p data-i18n="overviewLead"></p>
         </div>
         <div class="overview-card liquid">
-          <p data-i18n="positioning"></p>
+          <div class="overview-copy">
+            <p data-i18n="positioningShort"></p>
+            <div class="profile-diagram" aria-hidden="true">
+              <div class="profile-core" id="profileCore">Operating<br>Profile</div>
+              <span class="profile-node">Marketplace</span>
+              <span class="profile-node">Launch</span>
+              <span class="profile-node">Executive</span>
+              <span class="profile-node">AI-enabled</span>
+            </div>
+          </div>
           <div class="overview-points" id="overviewPoints"></div>
         </div>
         <div class="operating-map" id="operatingMap" aria-label="Operating profile map"></div>
+        <div class="impact-board" id="impactBoard" aria-label="Impact story board"></div>
         <div class="metric-grid" id="impactMetrics"></div>
       </section>
 
@@ -1788,7 +2464,7 @@
           <p data-i18n="aiLead"></p>
         </div>
         <div class="ai-layout">
-          <div class="ai-panel liquid">
+          <div class="ai-panel liquid ai-system-panel">
             <div class="tool-rings" aria-label="AI tools">
               <div class="ring one"></div>
               <div class="ring two"></div>
@@ -1800,10 +2476,12 @@
               <span class="tool-chip">Coding Agents</span>
               <div class="tool-core">AI Operating System</div>
             </div>
+            <div class="ai-throughput" id="aiThroughput" aria-hidden="true"></div>
           </div>
           <div class="ai-panel liquid">
             <h3 data-i18n="aiUseTitle"></h3>
-            <ul class="ai-list" id="aiUseList"></ul>
+            <div class="ai-workflow" id="aiWorkflow"></div>
+            <div class="ai-use-cloud" id="aiUseList"></div>
             <div class="capability-grid" id="capabilityGrid"></div>
           </div>
         </div>
@@ -1870,6 +2548,7 @@
           heroEyebrow: "Business Builder / Marketplace Growth / Strategy and Operations",
           heroSubline: "Marketplace Growth、Program Leadership、Strategic Partnerships、AI-enabled Consultingを横断するExecutive Career Portfolio。",
           positioning: "Amazon Marketplaceコンサルティング、全国規模の物流配送サービス立ち上げ、SoftBankでの営業組織マネジメント、新規事業開発を横断してきたビジネスリーダー。強みは、単なる営業やコンサルティングではなく、経営・事業課題を構造化し、社内外のステークホルダーを巻き込み、セラー成長、パートナー導入、ローンチ実行、AI活用による業務変革まで落とし込める点にある。",
+          positioningShort: "Marketplace成長、全国物流ローンチ、営業組織マネジメント、新規事業開発を横断。経営・事業課題を構造化し、セラー成長、パートナー導入、AI活用まで実行に落とす。",
           overviewTitle: "Big Tech-ready operating profile.",
           overviewLead: "顧客成長、部門横断実行、パートナーエコシステム、Executive Communicationを同時に扱うプロファイル。",
           projectsTitle: "Business cases with measurable execution.",
@@ -1885,18 +2564,29 @@
           detailTerms: {
             overview: "Operating lens",
             metric: "Impact metric",
+            impactStory: "Impact system",
             role: "Professional experience",
             project: "Selected project",
             capability: "Capability system",
+            aiStage: "AI workflow",
+            aiUse: "AI use case",
             challenge: "課題",
             execution: "実行",
             impact: "成果"
           },
           positioningItems: ["Business Builder", "Marketplace Growth", "Strategy and Operations", "Program Leadership", "Strategic Partnerships", "AI-enabled Consulting"],
+          profileCore: "Operating<br>Profile",
+          profileNodes: ["Marketplace", "Launch", "Executive", "AI-enabled"],
           overviewPoints: [
             ["Marketplace Growth", "GMV、広告、品揃え拡大、顧客流入分析、セール・販促戦略、QBRを通じたセラー成長。"],
             ["Cross-functional Launch", "Easy Ship全国展開、外部物流パートナー、Finance、Legal、UI検討、Operationsを横断。"],
             ["Executive Communication", "C-levelセラー、量販店支社長、WeWork Japan CEO、Cameo役員、SoftBank Group CEO Officeと連携。"]
+          ],
+          impactStories: [
+            ["Marketplace Growth Engine", "セラーポートフォリオ成長を、GMV・成長率・全国ランキングで可視化。", ["JPY 1.28B+", "+31.3%", "Top 7%"], ["月次GMV JPY 1.28B+ のセラーポートフォリオ", "31.3% YoY成長", "Amazon全国ランキング 227名中16位"], "growth"],
+            ["Selection Operations", "品揃え拡大を、購入可能ASINと販売実績ASINまで運用化。", ["15,095+", "22,746+", "JPY 155B"], ["購入可能ASIN 15,095+", "販売実績のあるASIN 22,746+", "FBA GMV対象規模 JPY 155B"], "selection"],
+            ["People Management Tree", "7名のManagerを直接、約70名規模の販売組織を間接的にマネジメント。", ["7 Managers", "~70 Sales", "No.1"], ["採用、育成、昇格判断、人事交渉", "複数店舗・複数商材の営業組織を推進", "全国モバイル販売実績 No.1、CEO Award"], "people"],
+            ["Launch & Partnership System", "Easy Ship、外部物流パートナー、Finance、Legal、Operationsを束ねた全国展開。", ["3PL", "Finance", "Legal"], ["3PL契約交渉、予算策定、コスト最適化", "ソートセンター移転、支払条件見直し", "行政ガイドラインを考慮した労働力調達戦略"], "launch"]
           ],
           impactLabels: [
             "月次セラーポートフォリオGMV",
@@ -1933,6 +2623,18 @@
             ["Masayoshi Son Keynote Materials", "Executive Communications Specialist", "SoftBank Career LIVE keynote向け戦略資料作成。", "テクノロジー、AI、ロボティクス、人類の未来に関するExecutive Narrativeを構築。", "Sales Account Manager業務と並行して実行。"],
             ["AI Voice and Anime Content Concept", "Business Model Planning", "AI音声と自動動画生成を用いたコンテンツ事業モデル。", "Creator EconomyとAI活用コンテンツ運用を接続。", "AI Platform、Creator Economy、Commercial Planningを接続する経験。"]
           ],
+          aiStages: [
+            ["Research", "市場・競合・セラー情報を整理し、事業課題の輪郭を作る。", ["Market research", "Competitive intelligence", "Seller analysis"]],
+            ["Analyze", "KPI、ROI、Marketplace Analyticsを使い、実行優先度を判断する。", ["Marketplace Analytics", "ROI Analysis", "KPI Design"]],
+            ["Build", "提案書、分析、HTML prototype、coding agentsで実行物に落とす。", ["Business proposals", "HTML prototyping", "Coding"]],
+            ["Decide", "Executive presentationと戦略判断支援で、関係者の意思決定を前に進める。", ["Executive presentation development", "Workflow automation", "Strategic decision support"]]
+          ],
+          aiThroughput: [
+            ["Input", "市場 / セラー / 競合"],
+            ["Reason", "課題と選択肢を構造化"],
+            ["Build", "提案 / 分析 / Prototype"],
+            ["Align", "意思決定支援"]
+          ],
           aiUses: ["Market research", "Competitive intelligence", "Seller analysis", "Executive presentation development", "Business proposals", "Data analysis", "Coding", "HTML prototyping", "Workflow automation", "Strategic decision support"],
           capabilities: [
             ["Analytics", ["Advanced Excel", "Marketplace Analytics", "ROI Analysis", "KPI Design", "Data Visualization"]],
@@ -1945,6 +2647,7 @@
           heroEyebrow: "Business Builder / Marketplace Growth / Strategy and Operations",
           heroSubline: "An executive career portfolio across Marketplace Growth, Program Leadership, Strategic Partnerships, and AI-enabled Consulting.",
           positioning: "Business builder and marketplace growth leader with 8+ years across Amazon Marketplace consulting, nationwide logistics launch, SoftBank sales leadership, and new business development. The strongest positioning is not a narrow merchant consultant profile. It is a cross-functional operator who can translate executive goals into seller growth, partner adoption, launch execution, and AI-enabled business workflows.",
+          positioningShort: "Cross-functional operator across marketplace growth, nationwide logistics launch, sales organization leadership, and new business development, translating business issues into seller growth, partner adoption, and AI-enabled execution.",
           overviewTitle: "Big Tech-ready operating profile.",
           overviewLead: "A profile built around customer growth, cross-functional execution, partner ecosystems, and executive communication.",
           projectsTitle: "Business cases with measurable execution.",
@@ -1960,18 +2663,29 @@
           detailTerms: {
             overview: "Operating lens",
             metric: "Impact metric",
+            impactStory: "Impact system",
             role: "Professional experience",
             project: "Selected project",
             capability: "Capability system",
+            aiStage: "AI workflow",
+            aiUse: "AI use case",
             challenge: "Challenge",
             execution: "Execution",
             impact: "Impact"
           },
           positioningItems: ["Business Builder", "Marketplace Growth", "Strategy and Operations", "Program Leadership", "Strategic Partnerships", "AI-enabled Consulting"],
+          profileCore: "Operating<br>Profile",
+          profileNodes: ["Marketplace", "Launch", "Executive", "AI-enabled"],
           overviewPoints: [
             ["Marketplace Growth", "Seller growth through GMV, advertising, selection expansion, customer traffic analysis, promotion strategy, and QBRs."],
             ["Cross-functional Launch", "Nationwide Easy Ship launch across 3PL partners, Finance, Legal, UI discussions, and Operations."],
             ["Executive Communication", "Worked with C-level sellers, retail executives, WeWork Japan CEO, Cameo executives, and SoftBank Group CEO Office."]
+          ],
+          impactStories: [
+            ["Marketplace Growth Engine", "Seller portfolio growth visualized through GMV, growth rate, and nationwide ranking.", ["JPY 1.28B+", "+31.3%", "Top 7%"], ["JPY 1.28B+ monthly seller portfolio GMV", "31.3% YoY growth", "16th of 227 nationwide Amazon consultant ranking"], "growth"],
+            ["Selection Operations", "Selection expansion made operational through buyable ASINs and ASINs with sales.", ["15,095+", "22,746+", "JPY 155B"], ["15,095+ buyable ASINs", "22,746+ ASINs with sales", "JPY 155B FBA GMV program scope"], "selection"],
+            ["People Management Tree", "Managed 7 direct managers and an approximately 70-person indirect sales organization.", ["7 Managers", "~70 Sales", "No.1"], ["Hiring, training, promotion assessment, and HR negotiation", "Multi-store, multi-product sales organization leadership", "No.1 nationwide mobile sales and CEO Award"], "people"],
+            ["Launch & Partnership System", "Nationwide execution across Easy Ship, 3PL partners, Finance, Legal, and Operations.", ["3PL", "Finance", "Legal"], ["3PL contract negotiation, budget planning, and cost optimization", "Sorting-center relocation and payment term review", "Labor procurement strategy with government guideline considerations"], "launch"]
           ],
           impactLabels: [
             "Monthly seller portfolio GMV",
@@ -2007,6 +2721,18 @@
             ["SoftBank Sales Organization Leadership", "Area Manager / Manager-of-Managers", "Lead a multi-store, multi-product sales organization.", "Managed 7 managers directly and approximately 70 sales employees indirectly.", "No.1 nationwide monthly mobile sales and CEO Award."],
             ["Masayoshi Son Keynote Materials", "Executive Communications Specialist", "Prepare strategic materials for SoftBank Career LIVE keynote.", "Built executive narrative around technology, AI, robotics, and humanity.", "Executed alongside Sales Account Manager responsibilities."],
             ["AI Voice and Anime Content Concept", "Business Model Planning", "Plan an AI voice and automated video content business model.", "Connected creator economy with AI-enabled content operations.", "Bridge experience across AI platforms, creator economy, and commercial planning."]
+          ],
+          aiStages: [
+            ["Research", "Structure market, competitor, and seller signals into a clear business problem.", ["Market research", "Competitive intelligence", "Seller analysis"]],
+            ["Analyze", "Use KPI, ROI, and marketplace analytics to judge execution priorities.", ["Marketplace Analytics", "ROI Analysis", "KPI Design"]],
+            ["Build", "Turn thinking into proposals, analysis, HTML prototypes, and coding-agent output.", ["Business proposals", "HTML prototyping", "Coding"]],
+            ["Decide", "Move stakeholder decisions through executive presentation development and strategic decision support.", ["Executive presentation development", "Workflow automation", "Strategic decision support"]]
+          ],
+          aiThroughput: [
+            ["Input", "Market / seller / competitor signals"],
+            ["Reason", "Structure issues and options"],
+            ["Build", "Proposal / model / prototype"],
+            ["Align", "Executive decision support"]
           ],
           aiUses: ["Market research", "Competitive intelligence", "Seller analysis", "Executive presentation development", "Business proposals", "Data analysis", "Coding", "HTML prototyping", "Workflow automation", "Strategic decision support"],
           capabilities: [
@@ -2078,13 +2804,18 @@
         languageButton.textContent = lang === "ja" ? "EN" : "日本語";
 
         document.getElementById("positioningList").innerHTML = c.positioningItems.map((item) => `<li>${escapeHtml(item)}</li>`).join("");
-        document.getElementById("heroProof").innerHTML = heroMetrics.slice(0, 3).map(([value], index) => `<span><strong>${escapeHtml(value)}</strong><em>${escapeHtml(c.impactLabels[index])}</em></span>`).join("");
+        document.getElementById("profileCore").innerHTML = c.profileCore;
+        document.querySelectorAll(".profile-node").forEach((node, index) => { node.textContent = c.profileNodes[index] || ""; });
+        document.getElementById("heroProof").innerHTML = heroMetrics.slice(0, 3).map(([value], index) => `<button class="hero-proof-card${index === 0 ? " primary" : ""}" type="button" data-detail="metric" data-index="${index}"><strong>${escapeHtml(value)}</strong><em>${escapeHtml(c.impactLabels[index])}</em></button>`).join("");
         document.getElementById("overviewPoints").innerHTML = c.overviewPoints.map(([title, body], index) => `<button type="button" data-detail="overview" data-index="${index}"><strong>${escapeHtml(title)}</strong><span>${escapeHtml(body)}</span></button>`).join("");
         document.getElementById("operatingMap").innerHTML = c.overviewPoints.map(([title, body], index) => `<button class="map-node detail-trigger" type="button" data-detail="overview" data-index="${index}"><i class="map-orb" aria-hidden="true"></i><strong>${escapeHtml(title)}</strong><span>${escapeHtml(body)}</span></button>`).join("");
+        document.getElementById("impactBoard").innerHTML = c.impactStories.map(impactStoryMarkup).join("");
         document.getElementById("impactMetrics").innerHTML = impactValues.map((item, index) => metricMarkup(item[0], c.impactLabels[index], item[1], item[2], item[3], index)).join("");
         document.getElementById("timelineTrack").innerHTML = c.roles.map((role, index) => roleMarkup(role, index === 0, index)).join("");
         document.getElementById("projectGrid").innerHTML = c.projects.map(projectMarkup).join("");
-        document.getElementById("aiUseList").innerHTML = c.aiUses.map((item) => `<li>${escapeHtml(item)}</li>`).join("");
+        document.getElementById("aiWorkflow").innerHTML = c.aiStages.map(aiStageMarkup).join("");
+        document.getElementById("aiThroughput").innerHTML = c.aiThroughput.map(([title, body]) => `<span><b>${escapeHtml(title)}</b>${escapeHtml(body)}</span>`).join("");
+        document.getElementById("aiUseList").innerHTML = c.aiUses.map((item, index) => `<button class="ai-use-chip" type="button" data-detail="aiUse" data-index="${index}">${escapeHtml(item)}</button>`).join("");
         document.getElementById("capabilityGrid").innerHTML = c.capabilities.map(([title, items], index) => `<button class="capability-card" type="button" data-detail="capability" data-index="${index}"><h4>${escapeHtml(title)}</h4><ul class="capability-list">${items.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul></button>`).join("");
 
         bindDetailTriggers();
@@ -2095,6 +2826,28 @@
       function metricMarkup(value, label, num, prefix, suffix, index) {
         const counter = num === null ? "" : ` data-counter="${num}" data-prefix="${escapeAttr(prefix)}" data-suffix="${escapeAttr(suffix)}"`;
         return `<button class="metric liquid detail-trigger" type="button" data-detail="metric" data-index="${index}"><span class="metric-graph" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><strong${counter}>${escapeHtml(value)}</strong><span>${escapeHtml(label)}</span></button>`;
+      }
+
+      function impactStoryMarkup([title, lead, stats, items, visual], index) {
+        return `<button class="impact-story liquid detail-trigger${index > 0 ? " compact" : ""}" type="button" data-detail="impactStory" data-index="${index}">${impactVisualMarkup(visual, stats)}<div class="impact-copy"><h3>${escapeHtml(title)}</h3><p>${escapeHtml(lead)}</p><div class="impact-stats">${stats.map((stat) => `<span>${escapeHtml(stat)}</span>`).join("")}</div></div></button>`;
+      }
+
+      function impactVisualMarkup(visual, stats) {
+        if (visual === "growth") {
+          return `<span class="impact-visual growth" aria-hidden="true"><span class="growth-chip one">${escapeHtml(stats[0])}</span><span class="growth-chip two">${escapeHtml(stats[1])}</span><span class="growth-chip three">${escapeHtml(stats[2])}</span><span class="growth-core">Growth</span></span>`;
+        }
+        if (visual === "people") {
+          return `<span class="impact-visual people-tree-mini" aria-hidden="true"><span class="tree-boss">Area<br>Manager</span><span class="tree-manager one">Mgr</span><span class="tree-manager two">7</span><span class="tree-manager three">Mgr</span><span class="tree-frontline">~70 Sales</span></span>`;
+        }
+        if (visual === "launch") {
+          return `<span class="impact-visual launch-visual" aria-hidden="true"><span class="launch-flow"><span>3PL</span><span>Finance</span><span>Legal</span><span>Ops</span></span><span class="launch-caption"><span>Partner</span><span>Governance</span></span></span>`;
+        }
+        return `<span class="impact-visual selection-visual" aria-hidden="true"><span class="selection-bars"><i></i><i></i><i></i><i></i></span><span class="selection-caption"><span>Buyable ASINs</span><span>ASINs with sales</span></span></span>`;
+      }
+
+      function aiStageMarkup([title, lead], index) {
+        const label = String(index + 1).padStart(2, "0");
+        return `<button class="ai-stage" type="button" data-detail="aiStage" data-index="${index}"><span class="ai-stage-orb" aria-hidden="true">${label}</span><div><h4>${escapeHtml(title)}</h4><p>${escapeHtml(lead)}</p></div></button>`;
       }
 
       function roleMarkup([company, title, dates, points], current, index) {
@@ -2152,10 +2905,22 @@
             title: value,
             lead: label,
             stats: [value, label],
+            visual: index === 10 || index === 11 ? "people" : "metric",
             items: [
               lang === "ja" ? "プロフィール全体の信頼性を支える定量実績。" : "A quantitative proof point supporting the broader operating profile.",
               lang === "ja" ? "詳細な文脈は関連するExperience / Portfolioカードに接続。" : "The full operating context is connected to the related Experience and Portfolio cards."
             ]
+          };
+        }
+        if (type === "impactStory") {
+          const [title, lead, stats, items, visual] = c.impactStories[index];
+          return {
+            kicker: terms.impactStory,
+            title,
+            lead,
+            stats,
+            visual,
+            items
           };
         }
         if (type === "role") {
@@ -2165,6 +2930,7 @@
             title: company,
             lead: title,
             stats: [dates, title],
+            visual: index === 4 ? "people" : "role",
             items: points
           };
         }
@@ -2188,10 +2954,44 @@
             items
           };
         }
+        if (type === "aiStage") {
+          const [title, lead, items] = c.aiStages[index];
+          return {
+            kicker: terms.aiStage,
+            title,
+            lead,
+            stats: items,
+            visual: "ai",
+            items
+          };
+        }
+        if (type === "aiUse") {
+          const title = c.aiUses[index];
+          return {
+            kicker: terms.aiUse,
+            title,
+            lead: lang === "ja" ? "AIを日常業務のOSとして使う具体ユースケース。" : "A concrete use case for AI as a day-to-day operating layer.",
+            stats: ["AI Operating System", title],
+            visual: "ai",
+            items: [
+              lang === "ja" ? "市場・競合・セラー情報、提案、分析、実装、意思決定支援に接続。" : "Connected to market, competitor, seller, proposal, analysis, implementation, and decision-support workflows.",
+              lang === "ja" ? "単発のツール利用ではなく、業務プロセス全体の速度と質を上げる使い方。" : "Used to raise the speed and quality of the operating process, not as a one-off tool."
+            ]
+          };
+        }
         return null;
       }
 
       function detailVisualMarkup(type, detail, index) {
+        if (detail.visual === "people") {
+          return peopleTreeMarkup();
+        }
+        if (detail.visual === "ai") {
+          return aiPipelineMarkup(detail);
+        }
+        if (type === "impactStory") {
+          return impactDetailVisualMarkup(detail.visual, detail);
+        }
         if (type === "metric") {
           return `<div class="metric-visual"><div class="metric-orbit"><strong>${escapeHtml(detail.title)}</strong></div><div class="detail-bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div></div>`;
         }
@@ -2203,6 +3003,25 @@
         }
         const steps = detail.items.slice(-3);
         return `<div class="flow-visual">${steps.map((item) => `<div class="flow-step"><i aria-hidden="true"></i><span>${escapeHtml(item)}</span></div>`).join("")}</div>`;
+      }
+
+      function peopleTreeMarkup() {
+        const managerLabel = lang === "ja" ? "7名のManager" : "7 direct managers";
+        const frontlineLabel = lang === "ja" ? "約70名の営業組織" : "~70 indirect sales organization";
+        const rootLabel = lang === "ja" ? "Area Manager" : "Area Manager";
+        return `<div class="people-visual"><div class="people-root">${escapeHtml(rootLabel)}</div><div class="people-branches"><div class="people-layer">${escapeHtml(managerLabel)}</div><div class="people-layer">${escapeHtml(lang === "ja" ? "採用 / 育成" : "Hiring / Training")}</div><div class="people-layer">${escapeHtml(lang === "ja" ? "昇格 / 人事交渉" : "Promotion / HR")}</div></div><div class="people-front">${escapeHtml(frontlineLabel)}</div></div>`;
+      }
+
+      function aiPipelineMarkup(detail) {
+        const stages = data[lang].aiStages;
+        return `<div class="ai-pipeline-visual">${stages.map(([title, lead], idx) => `<div class="ai-pipeline-step"><i aria-hidden="true"></i><span><strong>${escapeHtml(title)}</strong><span>${escapeHtml(idx === stages.findIndex((stage) => stage[0] === detail.title) ? detail.lead : lead)}</span></span></div>`).join("")}</div>`;
+      }
+
+      function impactDetailVisualMarkup(visual, detail) {
+        if (visual === "people") return peopleTreeMarkup();
+        if (visual === "launch") return `<div class="flow-visual">${detail.items.map((item) => `<div class="flow-step"><i aria-hidden="true"></i><span>${escapeHtml(item)}</span></div>`).join("")}</div>`;
+        if (visual === "selection") return `<div class="metric-visual"><div class="detail-bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div><div class="skill-visual">${detail.stats.map((stat) => `<div class="skill-pill"><i class="skill-dot" aria-hidden="true"></i><strong>${escapeHtml(stat)}</strong></div>`).join("")}</div></div>`;
+        return `<div class="metric-visual"><div class="metric-orbit"><strong>${escapeHtml(detail.stats[0])}</strong></div><div class="detail-bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div></div>`;
       }
 
       function escapeHtml(value) {
