@@ -1,4 +1,4 @@
-const CACHE_NAME = "tomohiro-cv-v6-20260718";
+const CACHE_NAME = "tomohiro-cv-v7-20260718";
 const CORE_ASSETS = [
   "./manifest.json",
   "./apple-touch-icon.png",

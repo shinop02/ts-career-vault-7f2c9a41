@@ -138,4 +138,4 @@ To save credentials:
 
 ## Motion And Accessibility
 
-Motion permission is requested only after pressing `Motion`. The site remains usable without gyroscope access. `prefers-reduced-motion` disables expensive motion and animation behavior.
+The site no longer requests device motion or gyroscope permission. Visual motion is handled through lightweight scroll, pointer, and CSS animation effects, and `prefers-reduced-motion` disables expensive motion and animation behavior.
